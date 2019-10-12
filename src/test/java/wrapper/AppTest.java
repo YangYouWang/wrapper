@@ -3,6 +3,8 @@ package wrapper;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import wrapper.bean.Student;
@@ -15,11 +17,12 @@ import java.util.Map;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
 {
-    BaseControllerWrapper baseControllerWrapper ;
-    List<Student> students;
-    Student student;
+
+    private static final Logger log = LoggerFactory.getLogger(AppTest.class);
+    private BaseControllerWrapper baseControllerWrapper ;
+    private List<Student> students;
 
     @Before
     public void init() {
@@ -29,7 +32,7 @@ public class AppTest
         // 初始化数据
         students = new ArrayList<>();
         for (int i = 0; i <= 10; i++ ) {
-            student = new Student(i, "张三" + i , i % 2);
+            Student student = new Student(i, "张三" + i , i % 2);
             students.add(student);
         }
     }
@@ -42,7 +45,7 @@ public class AppTest
     {
         List<Map<String, Object>> wrap = baseControllerWrapper.wrap(students);
         for (Map<String, Object> map : wrap) {
-            System.out.println(map.toString());
+            log.info(map.toString());
         }
     }
 }

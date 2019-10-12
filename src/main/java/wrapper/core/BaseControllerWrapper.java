@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
  */
 public class BaseControllerWrapper {
 
-
     private static final String SERIAL_VERSION_UID = "serialVersionUID";
 
     public List<Map<String, Object>> wrap(List<?> objs) {
@@ -54,9 +53,5 @@ public class BaseControllerWrapper {
         } catch (Exception e) {
             throw new RuntimeException("出错了.");
         }
-    }
-
-    public void hello() {
-        System.out.println("hello");
     }
 }
