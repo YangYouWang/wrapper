@@ -6,10 +6,10 @@ import wrapper.annotion.Warpper;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Wrapper包装类
@@ -21,53 +21,62 @@ public class BaseControllerWrapper {
     private String SERIAL_VERSION_UID = "serialVersionUID";
 
     public List<Map<String,Object>> wrap(List<?> objs)  {
-        List<Map<String,Object>> result = new ArrayList<>();
-        for (Object obj : objs) {
-            result.add(this.wrap(obj));
-        }
-        return result;
+        return objs.stream().map(this::wrap).collect(Collectors.toList());
     }
 
 
     public Map<String,Object> wrap(Object obj)  {
+//       return Arrays.stream(obj.getClass().getDeclaredFields())
+//                .filter(field -> !SERIAL_VERSION_UID.equals(field.getName())
+//                        && field.isAnnotationPresent(Warpper.class))
+//                .collect(Collectors.toMap(
+//                        Field::getName,
+//                        field -> {
+//                            try {
+//                                Method method = new PropertyDescriptor(field.getName(), obj.getClass()).getReadMethod();
+//                                String fieldValue = ReflectionUtils.invokeMethod(method, obj).toString();
+//                                Warpper warpper = field.getAnnotation(Warpper.class);
+//                                if (!"".equals(warpper.dictType())) {
+//                                    // 这块具体看自己数据库中的枚举表结构
+//
+//                                } else {
+//                                    return Arrays.stream(warpper.dictData())
+//                                            .map(dict -> dict.split(":"))
+//                                            .filter(dict -> dict.length > 0 && dict[0].equals(fieldValue))
+//                                            .findAny().equals(null);
+//                                }
+//                                return null;
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                                throw new RuntimeException("出错了.");
+//                            }
+//                        }
+//                ));
+
         try {
             Map<String,Object> result = new HashMap<>(16);
-            PropertyDescriptor propertyDescriptor;
             Class clazz = obj.getClass();
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                if (!SERIAL_VERSION_UID.equals(field.getName())) {
-                    propertyDescriptor = new PropertyDescriptor(field.getName(), clazz);
-                    Method method = propertyDescriptor.getReadMethod();
-                    Object fieldValue = ReflectionUtils.invokeMethod(method, obj);
-                    if(field.isAnnotationPresent(Warpper.class)){
-                        Warpper warpper = field.getAnnotation(Warpper.class);
-                        if (!"".equals(warpper.dictType())) {
-                            // 这块具体看自己数据库中的枚举表结构
-                            /*SysDictData sysDictData = new SysDictData() ;
-                            sysDictData.setDictType(warpper.dictType());
-                            List<SysDictData> sysDictDatas = dictDataService.selectDictDataList(sysDictData);
-                            if (sysDictDatas.size() > 0) {
-                                for(SysDictData dict : sysDictDatas) {
-                                    if (fieldValue.toString().equals(dict.getDictValue())) {
-                                        result.put(field.getName(),dict.getDictLabel()) ;
-                                    }
-                                }
-                                break;
-                            }*/
-                        }
-                        if (!"".equals(warpper.dictData())) {
-                            for (String dict: warpper.dictData()) {
-                                String[] split = dict.split(":") ;
-                                if (split.length > 0 && fieldValue.toString().equals(split[0])) {
-                                    result.put(field.getName(),split[1]);
-                                }
+                Method method = new PropertyDescriptor(field.getName(), clazz).getReadMethod();
+                String fieldValue = ReflectionUtils.invokeMethod(method, obj).toString();
+                if (!SERIAL_VERSION_UID.equals(field.getName())
+                        && field.isAnnotationPresent(Warpper.class)) {
+                    Warpper warpper = field.getAnnotation(Warpper.class);
+                    if (!"".equals(warpper.dictType())) {
+                        // 这块具体看自己数据库中的枚举表结构
+
+                    } else {
+                        for (String dict: warpper.dictData()) {
+                            String[] split = dict.split(":") ;
+                            if (split.length > 0 && fieldValue.equals(split[0])) {
+                                result.put(field.getName(),split[1]);
                             }
-                            break;
                         }
                     }
-                    result.put(field.getName(),fieldValue);
+                    continue;
                 }
+                result.put(field.getName(),fieldValue);
             }
             return result;
         } catch (Exception e) {
