@@ -27,16 +27,14 @@
 ```
  @GetMapping("/")
        public List<Map<String, Object>> hello() {
-          // 初始化容器
-          ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-          ControllerWrapper controllerWrapper = (ControllerWrapper) applicationContext.getBean("controllerWrapper");
           // 初始化数据
            List<Student> students = new ArrayList<>();
            for (int i = 0; i <= 10; i++ ) {
                Student student = new Student(i, "张三" + i , i % 2);
                students.add(student);
            }
-           return controllerWrapper.wrap(students);
+            // 调用
+           return ControllerWrapper.getInstance().wrap(students)(students);
        }
 ```
 3.效果展示

@@ -1,6 +1,8 @@
 package wrapper.core;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,19 @@ public class ControllerWrapper {
 
     @Resource
     private ArrayWrapper arrayWrapper;
+
+    private static ControllerWrapper instance;
+
+    private static ClassPathXmlApplicationContext applicationContext;
+
+    public static ControllerWrapper getInstance() {
+        if (instance == null) {
+            instance = new ControllerWrapper();
+            applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+            instance = (ControllerWrapper) applicationContext.getBean("controllerWrapper");
+        }
+        return instance;
+    }
 
     public List<Map<String, Object>> wrap(List<?> objs) {
         return objs.stream().map(this::wrap).collect(Collectors.toList());
