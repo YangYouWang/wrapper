@@ -34,7 +34,7 @@
                students.add(student);
            }
             // 调用
-           return ControllerWrapper.getInstance().wrap(students)(students);
+           return ControllerWrapper.getInstance().wrap(students);
        }
 ```
 3.效果展示

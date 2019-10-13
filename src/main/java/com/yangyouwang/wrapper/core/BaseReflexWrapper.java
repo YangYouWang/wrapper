@@ -1,9 +1,7 @@
 package com.yangyouwang.wrapper.core;
 
 import com.yangyouwang.wrapper.annotion.Wrapper;
-import com.yangyouwang.wrapper.consts.ConfigConsts;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,35 +11,23 @@ import java.util.Map;
  */
 public abstract class BaseReflexWrapper {
 
-    Map<String, Object> wrapTheMap(Object obj) {
+    Map<String, Object> wrapTheMap(Wrapper wrapperAnnotation, String fieldName, String fieldValue) {
+        String[] dictData = wrapperAnnotation.dictData();
+        String dictName = wrapperAnnotation.name();
         Map<String, Object> result = new HashMap<>(16);
-        try {
-            for (Field field : obj.getClass().getDeclaredFields()) {
-                String fieldName = field.getName();
-                field.setAccessible(true);
-                String fieldValue = field.get(obj).toString();
-                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName) && field.isAnnotationPresent(Wrapper.class)) {
-                    Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
-                    BaseReflexWrapper wrapper = WrapperFactory.createWrapper(wrapperAnnotation.dictType());
-                    result.putAll(wrapper.wrapperType(wrapperAnnotation, fieldName ,fieldValue));
-                    continue;
-                }
-                result.put(fieldName, fieldValue);
-            }
-            return result;
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("没有访问权限.");
-        } catch (Exception e) {
-            throw new RuntimeException("出错了.");
+        for (String dict : dictData) {
+             result.putAll(wrapTheType(dictName, dict, fieldName, fieldValue));
         }
+        return result;
     }
 
     /**
      * wrapper 类型
-     * @param wrapperAnnotation 注解类
+     * @param dictName 字典名称
+     * @param dictData 字典数据
      * @param fieldName 属性
      * @param fieldValue 值
      * @return 包装Map
      */
-    public abstract Map<String, Object> wrapperType(Wrapper wrapperAnnotation, String fieldName, String fieldValue);
+    abstract Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue);
 }
