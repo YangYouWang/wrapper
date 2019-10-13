@@ -1,6 +1,6 @@
-package wrapper.annotion;
+package com.yangyouwang.wrapper.annotion;
 
-import wrapper.consts.ConfigConsts;
+import com.yangyouwang.wrapper.consts.ConfigConsts;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

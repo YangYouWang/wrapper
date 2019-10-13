@@ -1,6 +1,6 @@
-package wrapper.bean;
+package com.yangyouwang.wrapper.bean;
 
-import wrapper.annotion.Wrapper;
+import com.yangyouwang.wrapper.annotion.Wrapper;
 
 public class Student {
 

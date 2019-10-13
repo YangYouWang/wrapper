@@ -1,6 +1,6 @@
-package wrapper.core;
+package com.yangyouwang.wrapper.core;
 
-import wrapper.consts.ConfigConsts;
+import com.yangyouwang.wrapper.consts.ConfigConsts;
 
 /**
  * warpper 工厂类

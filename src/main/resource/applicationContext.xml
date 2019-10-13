@@ -4,8 +4,8 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
        default-lazy-init="true">
-    <context:component-scan base-package="wrapper" />
-    <bean id="propertyConfigurer" class="wrapper.core.CustomizedPropertyPlaceholderConfigurer" >
+    <context:component-scan base-package="com.yangyouwang.wrapper" />
+    <bean id="propertyConfigurer" class="com.yangyouwang.wrapper.core.CustomizedPropertyPlaceholderConfigurer" >
         <property name="location" value="classpath:config.properties"/>
         <property name="ignoreResourceNotFound" value="true" />
         <property name="fileEncoding" value="utf-8" />

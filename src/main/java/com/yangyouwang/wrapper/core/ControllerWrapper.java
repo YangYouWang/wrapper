@@ -1,4 +1,4 @@
-package wrapper.core;
+package com.yangyouwang.wrapper.core;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;

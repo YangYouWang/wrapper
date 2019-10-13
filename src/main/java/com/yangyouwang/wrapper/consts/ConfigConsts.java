@@ -1,4 +1,4 @@
-package wrapper.consts;
+package com.yangyouwang.wrapper.consts;
 
 
 /**

@@ -1,7 +1,7 @@
-package wrapper.core;
+package com.yangyouwang.wrapper.core;
 
-import wrapper.annotion.Wrapper;
-import wrapper.consts.ConfigConsts;
+import com.yangyouwang.wrapper.annotion.Wrapper;
+import com.yangyouwang.wrapper.consts.ConfigConsts;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
