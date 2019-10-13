@@ -20,8 +20,7 @@ public abstract class BaseReflexWrapper {
                 String fieldName = field.getName();
                 field.setAccessible(true);
                 String fieldValue = field.get(obj).toString();
-                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName)
-                        && field.isAnnotationPresent(Wrapper.class)) {
+                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName) && field.isAnnotationPresent(Wrapper.class)) {
                     Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
                     BaseReflexWrapper wrapper = WrapperFactory.createWrapper(wrapperAnnotation.dictType());
                     result.putAll(wrapper.wrapperType(wrapperAnnotation, fieldName ,fieldValue));

@@ -1,5 +1,6 @@
 package wrapper.core;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import wrapper.annotion.Wrapper;
 
@@ -10,6 +11,7 @@ import java.util.Map;
  * config wrapper
  * @author yangyouwang
  */
+@Component
 public class ConfigWrapper extends BaseReflexWrapper {
 
     @Override
@@ -24,7 +26,6 @@ public class ConfigWrapper extends BaseReflexWrapper {
                     result.put(wrapperAnnotation.name(), configValue);
                 }
             }
-
         }
         return result;
     }

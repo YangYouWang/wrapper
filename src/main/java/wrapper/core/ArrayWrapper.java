@@ -1,5 +1,6 @@
 package wrapper.core;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import wrapper.annotion.Wrapper;
 
@@ -10,6 +11,7 @@ import java.util.Map;
  * Array Wrap
  * @author yangyouwang
  */
+@Component
 public class ArrayWrapper extends BaseReflexWrapper {
 
     @Override

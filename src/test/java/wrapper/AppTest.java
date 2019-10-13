@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import wrapper.bean.Student;
 import wrapper.core.ControllerWrapper;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +20,13 @@ public class AppTest
 {
 
     private static final Logger log = LoggerFactory.getLogger(AppTest.class);
-    private ControllerWrapper baseControllerWrapper ;
     private List<Student> students;
+    private ControllerWrapper controllerWrapper ;
 
     @Before
     public void init() {
-        // 初始化容器
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        baseControllerWrapper = (ControllerWrapper) applicationContext.getBean("controllerWrapper");
+        controllerWrapper  = (ControllerWrapper) applicationContext.getBean("controllerWrapper");
         // 初始化数据
         students = new ArrayList<>();
         for (int i = 0; i <= 10; i++ ) {
@@ -43,7 +41,7 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        List<Map<String, Object>> wrap = baseControllerWrapper.wrap(students);
+        List<Map<String, Object>> wrap = controllerWrapper.wrap(students);
         for (Map<String, Object> map : wrap) {
             log.info(map.toString());
         }
