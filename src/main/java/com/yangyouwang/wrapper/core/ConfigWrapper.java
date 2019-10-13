@@ -12,7 +12,7 @@ import java.util.Map;
 public class ConfigWrapper extends BaseReflexWrapper {
 
     @Override
-    public Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue) {
+    protected Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue) {
         Map<String, Object> result = new HashMap<>(16);
         String dictDataValue = CustomizedPropertyPlaceholderConfigurer.getContextProperty(dictData).toString();
         if (fieldValue.equals(dictDataValue)) {
