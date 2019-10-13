@@ -25,7 +25,7 @@ public class AppTest
     public void init() {
         // 初始化数据
         students = new ArrayList<>();
-        for (int i = 0; i <= 10000000; i++ ) {
+        for (int i = 0; i <= 100000; i++ ) {
             Student student = new Student(i, "张三" + i , i % 2);
             students.add(student);
         }

@@ -21,6 +21,8 @@ public class ControllerWrapper {
 
     private static ControllerWrapper instance;
 
+    private ControllerWrapper(){}
+
     public static ControllerWrapper getInstance() {
         if (instance == null) {
             instance = new ControllerWrapper();
@@ -31,7 +33,7 @@ public class ControllerWrapper {
     }
 
     public List<Map<String, Object>> wrap(List<?> objs) {
-        return objs.stream().map(this::wrap).collect(Collectors.toList());
+        return objs.stream().parallel().map(this::wrap).collect(Collectors.toList());
     }
     public Map<String, Object> wrap(Object obj) {
          return arrayWrapper.wrapTheMap(obj);
