@@ -21,12 +21,10 @@ public class ControllerWrapper {
 
     private static ControllerWrapper instance;
 
-    private static ClassPathXmlApplicationContext applicationContext;
-
     public static ControllerWrapper getInstance() {
         if (instance == null) {
             instance = new ControllerWrapper();
-            applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+            ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
             instance = (ControllerWrapper) applicationContext.getBean("controllerWrapper");
         }
         return instance;
