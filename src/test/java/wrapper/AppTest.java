@@ -26,7 +26,7 @@ public class AppTest
         // 初始化数据
         students = new ArrayList<>();
         for (int i = 0; i <= 100000; i++ ) {
-            Student student = new Student(i, "张三" + i , i % 2);
+            Student student = new Student(i, "张三" + i , i % 2, i % 2);
             students.add(student);
         }
     }
@@ -42,6 +42,9 @@ public class AppTest
         for (Map<String, Object> map : wrap) {
             log.info(map.toString());
         }
+//        for (Student student:students) {
+//            log.info(student.toString());
+//        }
         long endTime = System.currentTimeMillis();
         System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
     }

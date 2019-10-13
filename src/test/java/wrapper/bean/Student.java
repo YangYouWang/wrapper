@@ -15,14 +15,18 @@ public class Student {
     /**
      * 性别 0 男 1女
      */
-     @Wrapper(dictData = {"0:男","1:女"},dictType = "array",name = "demo")
+     @Wrapper(dictData = {"0:男","1:女"},dictType = "array")
     // @Wrapper(dictData = {"0","1"},dictType = "config", name = "demo")
     private int sex;
 
-    public Student(int id, String name, int sex) {
+    @Wrapper(dictData = {"0:是","1:否"},dictType = "array")
+    private int state;
+
+    public Student(int id, String name, int sex, int state) {
         this.id = id;
         this.name = name;
         this.sex = sex;
+        this.state = state;
     }
 
     public int getId() {
@@ -47,5 +51,13 @@ public class Student {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
