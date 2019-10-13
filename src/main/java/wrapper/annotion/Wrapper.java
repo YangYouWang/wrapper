@@ -15,6 +15,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Wrapper {
     /**
+     * 字典键值对
+     * @return 属性名称
+     */
+    String name() default "";
+    /**
      * 字典类型
      * @return 字典类型值
      */

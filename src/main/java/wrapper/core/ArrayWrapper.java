@@ -1,5 +1,6 @@
 package wrapper.core;
 
+import org.springframework.util.StringUtils;
 import wrapper.annotion.Wrapper;
 
 import java.util.HashMap;
@@ -17,7 +18,11 @@ public class ArrayWrapper extends BaseReflexWrapper {
         for (String dict : wrapperAnnotation.dictData()) {
             String[] split = dict.split(":");
             if (fieldValue.equals(split[0])) {
-                result.put(fieldName, split[1]);
+                if (StringUtils.isEmpty(wrapperAnnotation.name())) {
+                    result.put(fieldName, split[1]);
+                } else {
+                    result.put(wrapperAnnotation.name(), split[1]);
+                }
             }
         }
         return result;

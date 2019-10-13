@@ -24,7 +24,7 @@ public abstract class BaseReflexWrapper {
                         && field.isAnnotationPresent(Wrapper.class)) {
                     Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
                     BaseReflexWrapper wrapper = WrapperFactory.createWrapper(wrapperAnnotation.dictType());
-                    result.put(fieldName, wrapper.wrapperType(wrapperAnnotation, fieldName ,fieldValue));
+                    result.putAll(wrapper.wrapperType(wrapperAnnotation, fieldName ,fieldValue));
                     continue;
                 }
                 result.put(fieldName, fieldValue);

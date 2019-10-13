@@ -1,5 +1,6 @@
 package wrapper.core;
 
+import org.springframework.util.StringUtils;
 import wrapper.annotion.Wrapper;
 
 import java.util.HashMap;
@@ -17,8 +18,13 @@ public class ConfigWrapper extends BaseReflexWrapper {
         for (String configKey : wrapperAnnotation.dictData()) {
             String configValue = CustomizedPropertyPlaceholderConfigurer.getContextProperty(configKey).toString();
             if (fieldValue.equals(configKey)) {
-                result.put(fieldName, configValue);
+                if (StringUtils.isEmpty(wrapperAnnotation.name())) {
+                    result.put(fieldName, configValue);
+                } else {
+                    result.put(wrapperAnnotation.name(), configValue);
+                }
             }
+
         }
         return result;
     }
