@@ -1,6 +1,6 @@
 package wrapper.bean;
 
-import wrapper.annotion.Warpper;
+import wrapper.annotion.Wrapper;
 
 public class Student {
 
@@ -15,7 +15,8 @@ public class Student {
     /**
      * 性别 0 男 1女
      */
-    @Warpper(dictData = {"0:男","1:女"})
+    // @Wrapper(dictData = {"0:男","1:女"},dictType = "array")
+    @Wrapper(dictData = {"0","1"},dictType = "config")
     private int sex;
 
     public Student(int id, String name, int sex) {

@@ -12,6 +12,6 @@ public class App
     public static void main( String[] args )
     {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        applicationContext.getBean("wrapper");
+        applicationContext.getBean("controllerWrapper");
     }
 }
