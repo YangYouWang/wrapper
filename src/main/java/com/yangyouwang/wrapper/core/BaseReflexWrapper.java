@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class BaseReflexWrapper {
 
-    Map<String, Object> wrapTheMap(Wrapper wrapperAnnotation, String fieldName, String fieldValue) {
+    public final Map<String, Object> wrapTheMap(Wrapper wrapperAnnotation, String fieldName, String fieldValue) {
         String[] dictData = wrapperAnnotation.dictData();
         String dictName = wrapperAnnotation.name();
         Map<String, Object> result = new HashMap<>(16);
@@ -29,5 +29,5 @@ public abstract class BaseReflexWrapper {
      * @param fieldValue 值
      * @return 包装Map
      */
-    abstract Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue);
+    protected abstract Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue);
 }

@@ -1,14 +1,17 @@
-package com.yangyouwang.wrapper.core;
+package com.yangyouwang.wrapper.core.factory;
 
 import com.yangyouwang.wrapper.consts.ConfigConsts;
+import com.yangyouwang.wrapper.core.ArrayWrapper;
+import com.yangyouwang.wrapper.core.BaseReflexWrapper;
+import com.yangyouwang.wrapper.core.ConfigWrapper;
 
 /**
  * warpper 工厂类
  * @author yangyouwang
  */
-class WrapperFactory {
+public class WrapperFactory {
 
-    static BaseReflexWrapper createWrapper(String dictType) {
+    public static BaseReflexWrapper createWrapper(String dictType) {
         switch (dictType) {
             case ConfigConsts.WRAPPER_TYPE_ARRAY:
                 return new ArrayWrapper();

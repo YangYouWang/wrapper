@@ -2,6 +2,7 @@ package com.yangyouwang.wrapper.core;
 
 import com.yangyouwang.wrapper.annotion.Wrapper;
 import com.yangyouwang.wrapper.consts.ConfigConsts;
+import com.yangyouwang.wrapper.core.factory.WrapperFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 

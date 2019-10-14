@@ -14,14 +14,14 @@ public class ArrayWrapper extends BaseReflexWrapper {
 
     @Override
     protected Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue) {
-        Map<String, Object> result = new HashMap<>(16);
         String[] dict = dictData.split(":");
+        Map<String, Object>  result = new HashMap<>(16);
         if (fieldValue.equals(dict[0])) {
             if (StringUtils.isEmpty(dictName)) {
                 result.put(fieldName, dict[1]);
-            } else {
-                result.put(dictName, dict[1]);
+                return result;
             }
+            result.put(dictName, dict[1]);
         }
         return result;
     }
