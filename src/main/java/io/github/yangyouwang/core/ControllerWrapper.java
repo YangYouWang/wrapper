@@ -1,8 +1,8 @@
-package com.yangyouwang.wrapper.core;
+package io.github.yangyouwang.core;
 
-import com.yangyouwang.wrapper.annotion.Wrapper;
-import com.yangyouwang.wrapper.consts.ConfigConsts;
-import com.yangyouwang.wrapper.core.factory.WrapperFactory;
+import io.github.yangyouwang.annotion.Wrapper;
+import io.github.yangyouwang.core.factory.WrapperFactory;
+import io.github.yangyouwang.consts.ConfigConsts;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 

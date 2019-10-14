@@ -1,12 +1,12 @@
-package com.yangyouwang.wrapper;
+package io.github.yangyouwang;
 
 
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.yangyouwang.wrapper.bean.Student;
-import com.yangyouwang.wrapper.core.ControllerWrapper;
+import io.github.yangyouwang.bean.Student;
+import io.github.yangyouwang.core.ControllerWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

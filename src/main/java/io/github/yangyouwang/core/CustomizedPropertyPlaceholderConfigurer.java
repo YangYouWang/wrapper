@@ -1,4 +1,4 @@
-package com.yangyouwang.wrapper.core;
+package io.github.yangyouwang.core;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

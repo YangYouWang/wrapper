@@ -1,6 +1,6 @@
-package com.yangyouwang.wrapper.core;
+package io.github.yangyouwang.core;
 
-import com.yangyouwang.wrapper.annotion.Wrapper;
+import io.github.yangyouwang.annotion.Wrapper;
 
 import java.util.HashMap;
 import java.util.Map;

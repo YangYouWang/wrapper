@@ -1,4 +1,4 @@
-package com.yangyouwang.wrapper.consts;
+package io.github.yangyouwang.consts;
 
 
 /**

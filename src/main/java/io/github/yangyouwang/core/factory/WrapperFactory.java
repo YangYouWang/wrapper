@@ -1,9 +1,9 @@
-package com.yangyouwang.wrapper.core.factory;
+package io.github.yangyouwang.core.factory;
 
-import com.yangyouwang.wrapper.consts.ConfigConsts;
-import com.yangyouwang.wrapper.core.ArrayWrapper;
-import com.yangyouwang.wrapper.core.BaseReflexWrapper;
-import com.yangyouwang.wrapper.core.ConfigWrapper;
+import io.github.yangyouwang.core.ArrayWrapper;
+import io.github.yangyouwang.core.BaseReflexWrapper;
+import io.github.yangyouwang.core.ConfigWrapper;
+import io.github.yangyouwang.consts.ConfigConsts;
 
 /**
  * warpper 工厂类
