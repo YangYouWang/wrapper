@@ -26,7 +26,7 @@ public class CustomizedPropertyPlaceholderConfigurer extends PropertyPlaceholder
             ctxPropertiesMap.put(keyStr, value);
         }
     }
-    public static Object getContextProperty(String name) {
+    protected static Object getContextProperty(String name) {
         return ctxPropertiesMap.get(name);
     }
 }

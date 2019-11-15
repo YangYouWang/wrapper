@@ -1,4 +1,4 @@
-package io.github.yangyouwang.core.factory;
+package io.github.yangyouwang.core;
 
 import io.github.yangyouwang.core.ArrayWrapper;
 import io.github.yangyouwang.core.BaseReflexWrapper;
@@ -11,7 +11,7 @@ import io.github.yangyouwang.consts.ConfigConsts;
  */
 public class WrapperFactory {
 
-    public static BaseReflexWrapper createWrapper(String dictType) {
+    protected static BaseReflexWrapper createWrapper(String dictType) {
         switch (dictType) {
             case ConfigConsts.WRAPPER_TYPE_ARRAY:
                 return new ArrayWrapper();

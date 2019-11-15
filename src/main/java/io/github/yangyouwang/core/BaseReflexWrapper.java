@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class BaseReflexWrapper {
 
-    public final Map<String, Object> wrapTheMap(Wrapper wrapperAnnotation, String fieldName, String fieldValue) {
+    protected final Map<String, Object> wrapTheMap(Wrapper wrapperAnnotation, String fieldName, String fieldValue) {
         String[] dictData = wrapperAnnotation.dictData();
         String dictName = wrapperAnnotation.name();
         Map<String, Object> result = new HashMap<>(16);
