@@ -76,6 +76,7 @@
     <connection>scm:git:git@github.com:YangYouWang/wrapper.git</connection>
     <developerConnection>scm:git:git@github.com:YangYouWang/wrapper.git</developerConnection>
   </scm>
+
   <developers>
     <developer>
       <name>yangyouwang</name>
@@ -83,20 +84,6 @@
       <url>https://github.com/YangYouWang</url>
     </developer>
   </developers>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-
 
   <profiles>
     <profile>
@@ -163,6 +150,17 @@
           </plugin>
         </plugins>
       </build>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>sonatype-nexus-snapshots</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>sonatype-nexus-snapshots</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
     </profile>
   </profiles>
 </project>
+
