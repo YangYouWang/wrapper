@@ -18,11 +18,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>5.0.8.RELEASE</version>
-    </dependency>
     <!-- slf4j + log4j 日志 -->
     <dependency>
       <groupId>org.slf4j</groupId>

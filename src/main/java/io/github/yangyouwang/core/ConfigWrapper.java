@@ -1,6 +1,6 @@
 package io.github.yangyouwang.core;
 
-import org.springframework.util.StringUtils;
+import io.github.yangyouwang.util.PropertiesUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,12 +11,14 @@ import java.util.Map;
  */
 public class ConfigWrapper extends BaseReflexWrapper {
 
+    private PropertiesUtil propertiesUtil = PropertiesUtil.getInstance();
+
     @Override
     protected Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue) {
-        String dictDataValue = CustomizedPropertyPlaceholderConfigurer.getContextProperty(dictData).toString();
+        String dictDataValue = propertiesUtil.read("config.properties",dictData);
         Map<String, Object> result = new HashMap<>(16);
-        if (fieldValue.equals(dictDataValue)) {
-            if (StringUtils.isEmpty(dictName)) {
+        if (fieldValue.equals(dictData)) {
+            if (dictName.isEmpty()) {
                 result.put(fieldName, dictDataValue);
                 return result;
             }

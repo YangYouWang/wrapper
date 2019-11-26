@@ -2,8 +2,6 @@ package io.github.yangyouwang.core;
 
 import io.github.yangyouwang.annotion.Wrapper;
 import io.github.yangyouwang.consts.ConfigConsts;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -16,7 +14,6 @@ import java.util.stream.Collectors;
  *
  * @author yangyouwang
  */
-@Component
 public class ControllerWrapper {
 
 
@@ -26,8 +23,7 @@ public class ControllerWrapper {
 
     public static ControllerWrapper getInstance() {
         if (instance == null) {
-            ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-            instance = (ControllerWrapper) applicationContext.getBean("controllerWrapper");
+            instance = new ControllerWrapper();
         }
         return instance;
     }
@@ -43,12 +39,13 @@ public class ControllerWrapper {
                 String fieldName = field.getName();
                 field.setAccessible(true);
                 String fieldValue = field.get(obj).toString();
-                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName)
-                        && field.isAnnotationPresent(Wrapper.class)) {
+                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName) && field.isAnnotationPresent(Wrapper.class)) {
                     Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
                     BaseReflexWrapper wrapper = WrapperFactory.createWrapper(wrapperAnnotation.dictType());
-                    result.putAll(wrapper.wrapTheMap(wrapperAnnotation, fieldName ,fieldValue));
-                    continue;
+                    if (null != wrapper) {
+                        result.putAll(wrapper.wrapTheMap(wrapperAnnotation, fieldName ,fieldValue));
+                    }
+                   continue;
                 }
                 result.put(fieldName, fieldValue);
             }

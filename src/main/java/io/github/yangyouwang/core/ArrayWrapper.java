@@ -1,6 +1,5 @@
 package io.github.yangyouwang.core;
 
-import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class ArrayWrapper extends BaseReflexWrapper {
         String[] dict = dictData.split(":");
         Map<String, Object>  result = new HashMap<>(16);
         if (fieldValue.equals(dict[0])) {
-            if (StringUtils.isEmpty(dictName)) {
+            if (dictName.isEmpty()) {
                 result.put(fieldName, dict[1]);
                 return result;
             }
