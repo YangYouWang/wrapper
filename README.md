@@ -18,7 +18,7 @@
 /**
     * 性别 0 男 1女 配置方式: 如果是配置方式，config.properties在配置 0=男 1=女
   */
-  @Wrapper(dictData = {"0","1"},dictType = "config", name = "demo")
+  @Wrapper(dictData = {"sex.0","sex.1"},dictType = "config", name = "demo")
   private int sex;
 ```
 

@@ -17,6 +17,14 @@ public interface ConfigConsts {
      */
     String WRAPPER_TYPE_CONFIG = "config";
     /**
+     * 配置文件名称
+     */
+    String CONFIG_NAME = "wrapper.properties";
+    /**
+     * 配置文件路径
+     */
+    String CONFIG_PATH = "/resources/" + CONFIG_NAME;
+    /**
      * 非正常字段
      */
     String SERIAL_VERSION_UID = "serialVersionUID";

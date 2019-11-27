@@ -52,8 +52,6 @@ public class ControllerWrapper {
             return result;
         } catch (IllegalAccessException e) {
             throw new RuntimeException("没有访问权限.");
-        } catch (Exception e) {
-            throw new RuntimeException("出错了.");
         }
     }
 }

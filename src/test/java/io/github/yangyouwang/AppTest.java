@@ -42,9 +42,6 @@ public class AppTest
         for (Map<String, Object> map : wrap) {
             log.info(map.toString());
         }
-//        for (Student student:students) {
-//            log.info(student.toString());
-//        }
         long endTime = System.currentTimeMillis();
         System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
     }

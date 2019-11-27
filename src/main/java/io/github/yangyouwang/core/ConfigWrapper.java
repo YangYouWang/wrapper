@@ -1,7 +1,6 @@
 package io.github.yangyouwang.core;
 
 import io.github.yangyouwang.util.PropertiesUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +14,10 @@ public class ConfigWrapper extends BaseReflexWrapper {
 
     @Override
     protected Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue) {
-        String dictDataValue = propertiesUtil.read("config.properties",dictData);
+        String dictDataValue = propertiesUtil.read(dictData);
+        String dictKey = dictData.split("\\.")[1];
         Map<String, Object> result = new HashMap<>(16);
-        if (fieldValue.equals(dictData)) {
+        if (fieldValue.equals(dictKey)) {
             if (dictName.isEmpty()) {
                 result.put(fieldName, dictDataValue);
                 return result;

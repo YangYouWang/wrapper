@@ -1,11 +1,14 @@
 package io.github.yangyouwang.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import io.github.yangyouwang.consts.ConfigConsts;
+
+import java.io.*;
 import java.util.Properties;
 
+/**
+ * 工具类
+ * @author yangyouwang
+ */
 public class PropertiesUtil {
 
     private PropertiesUtil() {
@@ -21,22 +24,31 @@ public class PropertiesUtil {
 
     /**
      * 读取key字段，配置文件在classes根路径下xx.properties，在子路径下xx/xx.properties
-     *
-     * @param file
-     * @param key
-     * @return
      */
-    public String read(String file, String key) {
-        InputStream in = getClass().getClassLoader().getResourceAsStream(file);
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in));
+    public String read(String key) {
         Properties prop = new Properties();
-        String value = "";
+        InputStream inputStream = null;
         try {
-            prop.load(bf);
-            value = prop.getProperty(key);
-        } catch (IOException e) {
+            // 获取外部项目配置文件
+            inputStream = this.getClass().getResourceAsStream(ConfigConsts.CONFIG_PATH);
+            if (null == inputStream) {
+                inputStream = getClass().getClassLoader().getResourceAsStream(ConfigConsts.CONFIG_NAME);
+            }
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            prop.load(bufferedReader);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != inputStream) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return value;
+        return prop.getProperty(key);
     }
 }
