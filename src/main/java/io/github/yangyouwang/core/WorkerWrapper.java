@@ -53,7 +53,6 @@ public abstract class WorkerWrapper implements Runnable {
             }
             //处理子任务
             Map<String, Object> output = wrap(input);
-            System.out.println(Thread.currentThread().getName()+"线程 ,执行"+output);
             this.resultMap.put(Integer.toString(input.hashCode()), output);
         }
     }
