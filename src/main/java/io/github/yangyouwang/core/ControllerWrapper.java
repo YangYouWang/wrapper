@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @author yangyouwang
  */
-public class ControllerWrapper extends WorkerWrapper {
+public class ControllerWrapper extends BaseWorkerWrapper {
 
     /**
      * 最大可用的CPU核数

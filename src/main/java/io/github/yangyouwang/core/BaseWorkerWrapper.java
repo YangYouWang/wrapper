@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * 任务
  * @author yangyouwang
  */
-public abstract class WorkerWrapper implements Runnable {
+public abstract class BaseWorkerWrapper implements Runnable {
 
     /**
      * 定义每一个ConcurrentLinkedQueue队列去引用Master中的ConcurrentLinkedQueue

@@ -28,7 +28,7 @@ public class MasterWrapper {
      * @param workerWrapper  任务
      * @param workerCount 多少任务
      */
-    public MasterWrapper(WorkerWrapper workerWrapper, Integer workerCount) {
+    public MasterWrapper(BaseWorkerWrapper workerWrapper, Integer workerCount) {
         // 创建worker对Maset中任务队列的引用,用于任务的领取
         workerWrapper.setWorkerQueue(this.workQueue);
         // 创建worker对Maset中结果集合的引用，用于任务的提交
