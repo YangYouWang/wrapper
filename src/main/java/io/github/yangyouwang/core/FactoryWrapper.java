@@ -6,7 +6,7 @@ import io.github.yangyouwang.consts.ConfigConsts;
  * warpper 工厂类
  * @author yangyouwang
  */
-public class WrapperFactory {
+public class FactoryWrapper {
 
     protected static BaseReflexWrapper createWrapper(String dictType) {
         switch (dictType) {

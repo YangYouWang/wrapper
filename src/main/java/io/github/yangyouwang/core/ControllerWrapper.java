@@ -4,18 +4,18 @@ import io.github.yangyouwang.annotion.Wrapper;
 import io.github.yangyouwang.consts.ConfigConsts;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import java.util.*;
 /**
  * Wrapper包装类
  *
  * @author yangyouwang
  */
-public class ControllerWrapper {
+public class ControllerWrapper extends WorkerWrapper {
 
+    /**
+     * 最大可用的CPU核数
+     */
+    protected static final int PROCESSORS = Runtime.getRuntime().availableProcessors();
 
     private static ControllerWrapper instance;
 
@@ -29,8 +29,20 @@ public class ControllerWrapper {
     }
 
     public List<Map<String, Object>> wrap(List<?> objs) {
-        return objs.stream().map(this::wrap).collect(Collectors.toList());
+        MasterWrapper masterWrapper = new MasterWrapper(this, PROCESSORS * 2);
+        for (Object obj : objs) {
+            masterWrapper.submit(obj);
+        }
+        masterWrapper.execute();
+        while (true) {
+            //判断当所有线程都结束后打印结果
+            if (masterWrapper.isComplete()) {
+                return masterWrapper.getResult();
+            }
+        }
     }
+
+    @Override
     public Map<String, Object> wrap(Object obj) {
         Map<String, Object> result = new HashMap<>(16);
         Field[] fields = obj.getClass().getDeclaredFields();
@@ -41,10 +53,8 @@ public class ControllerWrapper {
                 String fieldValue = field.get(obj).toString();
                 if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName) && field.isAnnotationPresent(Wrapper.class)) {
                     Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
-                    BaseReflexWrapper wrapper = WrapperFactory.createWrapper(wrapperAnnotation.dictType());
-                    if (null != wrapper) {
-                        result.putAll(wrapper.wrapTheMap(wrapperAnnotation, fieldName ,fieldValue));
-                    }
+                    BaseReflexWrapper wrapper = FactoryWrapper.createWrapper(wrapperAnnotation.dictType());
+                    result.putAll(wrapper.wrapTheMap(wrapperAnnotation, fieldName ,fieldValue));
                    continue;
                 }
                 result.put(fieldName, fieldValue);
@@ -52,6 +62,8 @@ public class ControllerWrapper {
             return result;
         } catch (IllegalAccessException e) {
             throw new RuntimeException("没有访问权限.");
+        } catch (NullPointerException e) {
+            throw new RuntimeException("空指针异常了.");
         }
     }
 }

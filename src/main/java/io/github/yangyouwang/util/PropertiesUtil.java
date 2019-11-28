@@ -32,6 +32,7 @@ public class PropertiesUtil {
             // 获取外部项目配置文件
             inputStream = this.getClass().getResourceAsStream(ConfigConsts.CONFIG_PATH);
             if (null == inputStream) {
+                // 读取本项目下
                 inputStream = getClass().getClassLoader().getResourceAsStream(ConfigConsts.CONFIG_NAME);
             }
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
