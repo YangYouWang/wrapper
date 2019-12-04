@@ -1,21 +1,16 @@
 package io.github.yangyouwang.core;
 
-import io.github.yangyouwang.annotion.Wrapper;
-import io.github.yangyouwang.consts.ConfigConsts;
-
-import java.lang.reflect.Field;
 import java.util.*;
 /**
  * Wrapper包装类
  *
  * @author yangyouwang
  */
-public class ControllerWrapper extends BaseWorkerWrapper {
-
+public class ControllerWrapper {
     /**
-     * 最大可用的CPU核数
+     * 最大可用的CPU核数 x 2
      */
-    protected static final int PROCESSORS = Runtime.getRuntime().availableProcessors();
+    protected static final int PROCESSORS = Runtime.getRuntime().availableProcessors() << 1;
 
     private static ControllerWrapper instance;
 
@@ -29,41 +24,16 @@ public class ControllerWrapper extends BaseWorkerWrapper {
     }
 
     public List<Map<String, Object>> wrap(List<?> objs) {
-        MasterWrapper masterWrapper = new MasterWrapper(this, PROCESSORS * 2);
+        ResultWrapper resultWrapper = new ResultWrapper(new ArrayWrapper(), PROCESSORS);
         for (Object obj : objs) {
-            masterWrapper.submit(obj);
+            resultWrapper.submit(obj);
         }
-        masterWrapper.execute();
-        while (true) {
-            //判断当所有线程都结束后打印结果
-            if (masterWrapper.isComplete()) {
-                return masterWrapper.getResult();
-            }
-        }
+        return resultWrapper.getResultWrapper();
     }
 
-    @Override
     public Map<String, Object> wrap(Object obj) {
-        Map<String, Object> result = new HashMap<>(16);
-        Field[] fields = obj.getClass().getDeclaredFields();
-        try {
-            for (Field field : fields) {
-                String fieldName = field.getName();
-                field.setAccessible(true);
-                String fieldValue = field.get(obj).toString();
-                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName) && field.isAnnotationPresent(Wrapper.class)) {
-                    Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
-                    BaseReflexWrapper wrapper = FactoryWrapper.createWrapper(wrapperAnnotation.dictType());
-                    result.putAll(wrapper.wrapTheMap(wrapperAnnotation, fieldName ,fieldValue));
-                   continue;
-                }
-                result.put(fieldName, fieldValue);
-            }
-            return result;
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("没有访问权限.");
-        } catch (NullPointerException e) {
-            throw new RuntimeException("空指针异常了.");
-        }
+        ResultWrapper resultWrapper = new ResultWrapper(new ArrayWrapper(), PROCESSORS);
+        resultWrapper.submit(obj);
+        return resultWrapper.getResultWrapper().get(resultWrapper.getResult().size() - 1);
     }
 }

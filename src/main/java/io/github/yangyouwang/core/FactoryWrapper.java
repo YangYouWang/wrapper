@@ -3,7 +3,7 @@ package io.github.yangyouwang.core;
 import io.github.yangyouwang.consts.ConfigConsts;
 
 /**
- * warpper 工厂类
+ * wrapper 工厂类
  * @author yangyouwang
  */
 public class FactoryWrapper {

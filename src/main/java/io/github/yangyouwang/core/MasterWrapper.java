@@ -74,7 +74,7 @@ public class MasterWrapper {
      * @return 结果
      */
     public List<Map<String,Object>> getResult() {
-        List<Map<String, Object>> result = new ArrayList<>();
+        List<Map<String, Object>> result = new ArrayList<>(16);
         for (Map.Entry<String, Map<String,Object>> map : resultMap.entrySet()) {
             result.add(map.getValue());
         }

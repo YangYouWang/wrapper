@@ -40,7 +40,7 @@ public abstract class BaseWorkerWrapper implements Runnable {
      * @param input  Object
      * @return Map<String, Object>
      */
-    public abstract Map<String, Object> wrap(Object input) ;
+    public abstract Map<String, Object> wrapTheMap(Object input) ;
 
 
     @Override
@@ -52,7 +52,7 @@ public abstract class BaseWorkerWrapper implements Runnable {
                 break;
             }
             //处理子任务
-            Map<String, Object> output = wrap(input);
+            Map<String, Object> output = this.wrapTheMap(input);
             this.resultMap.put(Integer.toString(input.hashCode()), output);
         }
     }
