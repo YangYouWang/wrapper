@@ -1,5 +1,6 @@
 package io.github.yangyouwang.bean;
 
+import io.github.yangyouwang.annotion.Sort;
 import io.github.yangyouwang.annotion.Wrapper;
 
 public class Student {
@@ -7,6 +8,7 @@ public class Student {
     /**
      * 标识
      */
+    @Sort
     private int id;
     /**
      * 姓名

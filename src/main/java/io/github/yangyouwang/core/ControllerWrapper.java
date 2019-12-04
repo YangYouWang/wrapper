@@ -7,10 +7,6 @@ import java.util.*;
  * @author yangyouwang
  */
 public class ControllerWrapper {
-    /**
-     * 最大可用的CPU核数 x 2
-     */
-    protected static final int PROCESSORS = Runtime.getRuntime().availableProcessors() << 1;
 
     private static ControllerWrapper instance;
 
@@ -24,7 +20,7 @@ public class ControllerWrapper {
     }
 
     public List<Map<String, Object>> wrap(List<?> objs) {
-        ResultWrapper resultWrapper = new ResultWrapper(new ArrayWrapper(), PROCESSORS);
+        ResultWrapper resultWrapper = new ResultWrapper(new ArrayWrapper(), CachePool.PROCESSORS);
         for (Object obj : objs) {
             resultWrapper.submit(obj);
         }
@@ -32,7 +28,7 @@ public class ControllerWrapper {
     }
 
     public Map<String, Object> wrap(Object obj) {
-        ResultWrapper resultWrapper = new ResultWrapper(new ArrayWrapper(), PROCESSORS);
+        ResultWrapper resultWrapper = new ResultWrapper(new ArrayWrapper(), CachePool.PROCESSORS);
         resultWrapper.submit(obj);
         return resultWrapper.getResultWrapper().get(resultWrapper.getResult().size() - 1);
     }

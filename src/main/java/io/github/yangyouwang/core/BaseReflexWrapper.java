@@ -1,5 +1,6 @@
 package io.github.yangyouwang.core;
 
+import io.github.yangyouwang.annotion.Sort;
 import io.github.yangyouwang.annotion.Wrapper;
 import io.github.yangyouwang.consts.ConfigConsts;
 
@@ -30,21 +31,25 @@ public abstract class BaseReflexWrapper extends BaseWorkerWrapper {
                 String fieldName = field.getName();
                 field.setAccessible(true);
                 String fieldValue = field.get(obj).toString();
-                // 非字段 且 标注注解
-                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName)
-                        && field.isAnnotationPresent(Wrapper.class)) {
-                    // 获取注解相关属性
-                    Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
-                    String[] dictData = wrapperAnnotation.dictData();
-                    String dictName = wrapperAnnotation.name();
-                    // 选择类型
-                    BaseReflexWrapper wrapper = FactoryWrapper.createWrapper(wrapperAnnotation.dictType());
-                    for (String dict : dictData) {
-                        result.putAll(wrapper.wrapTheType(dictName, dict, fieldName, fieldValue));
+                // 非字段
+                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName)) {
+                    if(field.isAnnotationPresent(Wrapper.class)) {
+                        // 获取注解相关属性
+                        Wrapper wrapperAnnotation = field.getAnnotation(Wrapper.class);
+                        String[] dictData = wrapperAnnotation.dictData();
+                        String dictName = wrapperAnnotation.name();
+                        // 选择类型
+                        BaseReflexWrapper wrapper = FactoryWrapper.createWrapper(wrapperAnnotation.dictType());
+                        for (String dict : dictData) {
+                            result.putAll(wrapper.wrapTheType(dictName, dict, fieldName, fieldValue));
+                        }
+                        continue;
                     }
-                    continue;
+                    if(field.isAnnotationPresent(Sort.class)) {
+                        CachePool.FIELD_NAME_QUEUE.offer(fieldName);
+                    }
+                    result.put(fieldName, fieldValue);
                 }
-                result.put(fieldName, fieldValue);
             }
             return result;
         } catch (IllegalAccessException e) {

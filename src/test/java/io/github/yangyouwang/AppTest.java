@@ -10,7 +10,6 @@ import io.github.yangyouwang.core.ControllerWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Unit test for simple App.
@@ -26,7 +25,7 @@ public class AppTest
     public void init() {
         // 初始化数据
         students = new ArrayList<>();
-        for (int i = 0; i <= 100; i++ ) {
+        for (int i = 0; i <= 100000; i++ ) {
             Student student = new Student(i, "张三" + i , i % 2);
             students.add(student);
         }
