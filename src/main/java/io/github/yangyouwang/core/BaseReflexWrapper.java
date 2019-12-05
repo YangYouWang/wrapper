@@ -46,7 +46,7 @@ public abstract class BaseReflexWrapper extends BaseWorkerWrapper {
                         continue;
                     }
                     if(field.isAnnotationPresent(Sort.class)) {
-                        CachePool.FIELD_NAME_QUEUE.offer(fieldName);
+                        CachePool.FIELD_NAME_SET.add(fieldName);
                     }
                     result.put(fieldName, fieldValue);
                 }
