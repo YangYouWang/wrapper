@@ -1,5 +1,10 @@
 package io.github.yangyouwang.core;
 
+import io.github.yangyouwang.annotion.Wrapper;
+import io.github.yangyouwang.consts.ConfigConsts;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -37,11 +42,48 @@ public abstract class BaseWorkerWrapper implements Runnable {
 
     /**
      * 子任务处理的逻辑，在子类中实现具体逻辑
-     * @param input  Object
-     * @return Map<String, Object>
+     *
+     * 反射获取注解属性
+     * @param obj 对象
+     * @return Map
      */
-    public abstract Map<String, Object> wrapTheMap(Object input) ;
+    public final Map<String, Object> wrapTheMap(Object obj) {
+        Map<String, Object> result = new HashMap<>(16);
+        // 获取Field
+        Class clazz = obj.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        try {
+            for (Field field : fields) {
+                // 获取字段相关属性
+                String fieldName = field.getName();
+                if (!ConfigConsts.SERIAL_VERSION_UID.equals(fieldName)) {
+                    field.setAccessible(true);
+                    String fieldValue = field.get(obj).toString();
+                    if (field.isAnnotationPresent(Wrapper.class)) {
+                        Wrapper annotation = field.getAnnotation(Wrapper.class);
+                        String dictName = annotation.name();
+                        fieldValue = this.wrapTheType(annotation,fieldName,fieldValue);
+                        fieldName = null == dictName ? fieldName : dictName;
+                    }
+                    result.put(fieldName, fieldValue);
+                }
+            }
+            return result;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("没有访问权限.");
+        } catch (NullPointerException e) {
+            throw new RuntimeException("空指针异常了.");
+        }
+    }
 
+    /**
+     * wrapper类型
+     * @param annotation 注解
+     * @param fieldName  字段
+     * @param fieldValue 属性
+     * @return value
+     */
+    protected abstract String wrapTheType(Wrapper annotation,String fieldName,String fieldValue);
 
     @Override
     public void run() {

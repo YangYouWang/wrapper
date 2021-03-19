@@ -1,27 +1,26 @@
 package io.github.yangyouwang.core;
 
+import io.github.yangyouwang.annotion.Wrapper;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Array Wrap
  * @author yangyouwang
  */
-public class ArrayWrapper extends BaseReflexWrapper {
-
+public class ArrayWrapper extends BaseWorkerWrapper {
 
     @Override
-    protected Map<String, Object> wrapTheType(String dictName, String dictData, String fieldName, String fieldValue) {
-        String[] dict = dictData.split(":");
-        Map<String, Object>  result = new HashMap<>(16);
-        if (fieldValue.equals(dict[0])) {
-            if (dictName.isEmpty()) {
-                result.put(fieldName, dict[1]);
-                return result;
+    protected String wrapTheType(Wrapper annotation, String fieldName, String fieldValue) {
+        String[] dictData = annotation.dictData();
+        String separator = annotation.separator();
+        String def = annotation.def();
+        // 选择类型
+        for (String dict : dictData) {
+            String[] data = dict.split(separator);
+            if (fieldValue.equals(data[0])) {
+                return data[1];
             }
-            result.put(dictName, dict[1]);
         }
-        return result;
+        return def;
     }
 }
