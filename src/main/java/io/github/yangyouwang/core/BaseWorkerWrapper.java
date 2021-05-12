@@ -2,10 +2,12 @@ package io.github.yangyouwang.core;
 
 import io.github.yangyouwang.annotion.Wrapper;
 import io.github.yangyouwang.consts.ConfigConsts;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -61,9 +63,12 @@ public abstract class BaseWorkerWrapper implements Runnable {
                     String fieldValue = field.get(obj).toString();
                     if (field.isAnnotationPresent(Wrapper.class)) {
                         Wrapper annotation = field.getAnnotation(Wrapper.class);
-                        String dictName = annotation.name();
                         fieldValue = this.wrapTheType(annotation,fieldName,fieldValue);
-                        fieldName = null == dictName ? fieldName : dictName;
+                        // 判斷字典键值对是否有值
+                        if (!StringUtils.isEmpty(annotation.name())) {
+                            result.put(annotation.name(), fieldValue);
+                            continue;
+                        }
                     }
                     result.put(fieldName, fieldValue);
                 }

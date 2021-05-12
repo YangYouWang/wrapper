@@ -1,15 +1,15 @@
 package io.github.yangyouwang.factory;
 
-import io.github.yangyouwang.config.WrapperProperties;
 import io.github.yangyouwang.consts.ConfigConsts;
 import io.github.yangyouwang.core.ArrayWrapper;
 import io.github.yangyouwang.core.CachePool;
 import io.github.yangyouwang.core.ConfigWrapper;
 import io.github.yangyouwang.core.MasterWrapper;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.annotation.Resource;
 
 /**
  * @author yangyouwang
@@ -19,30 +19,25 @@ import javax.annotation.Resource;
  * @date 2021/3/199:12 PM
  */
 @Component
-public class FactoryWrapper {
+public class FactoryWrapper implements FactoryBean {
 
-    @Resource
-    private ArrayWrapper array;
+    @Value("${wrapper.type}")
+    private String type;
 
-    @Resource
-    private ConfigWrapper config;
-
-    @Resource
-    private WrapperProperties wrapperProperties;
-
-    /**
-     * 创建包装返回结果
-     * @return 包装返回结果
-     */
-    public MasterWrapper createResultWrapper() {
-        String type = wrapperProperties.getType();
+    @Override
+    public MasterWrapper getObject() {
         Assert.notNull(type,"wrapper类型未配置");
         if (ConfigConsts.WRAPPER_TYPE_ARRAY.equals(type)) {
-            return new MasterWrapper(array, CachePool.PROCESSORS);
+            return new MasterWrapper(new ArrayWrapper(), CachePool.PROCESSORS);
         }
         if (ConfigConsts.WRAPPER_TYPE_CONFIG.equals(type)) {
-            return new MasterWrapper(config, CachePool.PROCESSORS);
+            return new MasterWrapper(new ConfigWrapper(), CachePool.PROCESSORS);
         }
         throw new RuntimeException("参数错误");
+    }
+
+    @Override
+    public Class<MasterWrapper> getObjectType() {
+        return MasterWrapper.class;
     }
 }

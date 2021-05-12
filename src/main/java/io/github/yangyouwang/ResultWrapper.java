@@ -21,7 +21,7 @@ public class ResultWrapper  {
      * list数据
      */
     public List<Map<String, Object>> wrap(List<?> objs) {
-        MasterWrapper masterWrapper = factoryWrapper.createResultWrapper();
+        MasterWrapper masterWrapper = factoryWrapper.getObject();
         for (Object obj : objs) {
             masterWrapper.submit(obj);
         }
@@ -40,7 +40,7 @@ public class ResultWrapper  {
      * 对象
      */
     public Map<String, Object> wrap(Object obj) {
-        MasterWrapper masterWrapper = factoryWrapper.createResultWrapper();
+        MasterWrapper masterWrapper = factoryWrapper.getObject();
         masterWrapper.submit(obj);
         // 执行
         masterWrapper.execute();
